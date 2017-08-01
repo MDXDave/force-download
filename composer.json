@@ -1,0 +1,50 @@
+{
+    "name": "mdxdave/force-download",
+    "description": "Force download of assets",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "timeago"
+    ],
+    "support": {
+        "docs": "https://github.com/mdxdave/force-download/blob/master/README.md",
+        "issues": "https://github.com/mdxdave/force-download/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MDXDave",
+            "homepage": "https://mdxdave.de"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "~3.0.0-beta.23"
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "mdxdave\\forcedownload\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "ForceDownload",
+        "handle": "force-download",
+        "schemaVersion": "1.0.0",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/mdxdave/force-download/master/CHANGELOG.md",
+        "class": "mdxdave\\forcedownload\\ForceDownload"
+    }
+}
