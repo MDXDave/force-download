@@ -27,7 +27,7 @@ class ForceDownload extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        Craft::$app->view->twig->addExtension(new twigextensions\ForceDownloadTwigExtension());
+        Craft::$app->view->registerTwigExtension(new twigextensions\ForceDownloadTwigExtension());
 
         Craft::info(
             Craft::t(
