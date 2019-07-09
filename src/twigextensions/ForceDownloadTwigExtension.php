@@ -1,6 +1,6 @@
 <?php
 /**
- * ForceDownload Plugin for Craft CMS 3.1.x
+ * ForceDownload Plugin for Craft CMS >= 3.1.33
  *
  * @link      https://mdxdave.de
  * @copyright Copyright (c) 2017-2019 MDXDave
@@ -60,7 +60,7 @@ class ForceDownloadTwigExtension extends \Twig_Extension
         if($desc)
               $output .= '<p>'. $asset->text .'</p>';
       $output .= '<div class="ui grid center aligned"><div class="column twelve wide" style="margin: 10px;">
-    <form method="post" action="'. $asset->url .'?checksum='. hash("sha512", $asset->filename[0]->filename) .'&do=download">
+    <form method="post" action="/rawdownload?download_id='. $asset->id .'&checksum='. hash("sha512", $asset->filename[0]->filename) .'&do=download">
         <input type="hidden" name="'. Craft::$app->config->general->csrfTokenName .'" value="'. Craft::$app->request->csrfToken .'">
         <button id="downloadButton" class="ui labeled icon button green big">
             <i class="download icon white"></i> Herunterladen
@@ -77,12 +77,14 @@ class ForceDownloadTwigExtension extends \Twig_Extension
         return $raw;    
     }
 
-    function forceDownload($asset, $downloadCounter=null) {
+    function forceDownload($downloadId, $downloadCounter=null) {
+        $download = Craft::$app->entries->getEntryById($downloadId);
+        $asset = Craft::$app->assets->getAssetById((int)$download->filename[0]->id);
         if($downloadCounter){
-          $download = Craft::$app->urlManager->getMatchedElement();
-          $download->setFieldValue($downloadCounter, $download->getFieldValue($downloadCounter)+1);
+          $download->downloadCount = $download->downloadCount+1;
           Craft::$app->elements->saveElement($download);
         }
+        
         $path = $this->_getFullDirectoryPath($asset);
         $filename = $asset->filename;
         $filepath = $path . '/' . $filename;
@@ -92,7 +94,6 @@ class ForceDownloadTwigExtension extends \Twig_Extension
         header('Content-Length: ' . $asset->size);
         header('Accept-Ranges: bytes');
         readfile($filepath);
-        exit();
     }
     
     private function _getFullDirectoryPath($file)
