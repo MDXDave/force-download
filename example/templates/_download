@@ -1,0 +1,3 @@
+{% if craft.request.param("download_id")|length and craft.request.param("do") == "download" and craft.request.getPost()|length %}{{ craft.request.param("download_id")|forceDownload("downloadCount") }}{% else %}
+    {% redirect craft.entries.id(craft.request.param("download_id")).first().url ~ "?utm_source=no_hotlinking" 302 %}
+{% endif %}
