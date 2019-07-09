@@ -1,10 +1,10 @@
-# ForceDownload plugin for Craft CMS 3.1
+# ForceDownload plugin for Craft CMS >= 3.1.33
 
-Simple Downloader for Craft CMS 3.1.
+Simple Downloader for Craft CMS >= 3.1.33
 
 ## Requirements
 
-This plugin requires Craft CMS 3.1.0 or later.
+This plugin requires Craft CMS 3.1.33 or later.
 
 ## Installation
 
@@ -22,14 +22,7 @@ To install the plugin, follow these instructions.
 
 ## Using ForceDownload
 
-Just use the following code in your Twig template file (whereas __filename__ is an asset field):
-        
-        {{ entry.filename[0]|forceDownload }}
-        
-To use a rudimental download counter, use the fieldname as 2nd param (the __downloadCounter__ field will be inceremented by 1):
-        
-        {{ entry.filename[0]|forceDownload("downloadCounter") }}
-
+See example in the folder _example_.
 
 
 Brought to you by [MDXDave](https://mdxdave.de)
