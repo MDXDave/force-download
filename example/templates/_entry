@@ -1,0 +1,10 @@
+{% extends "layout/base" %}
+  {% block mainContent %}
+      <h2>Download von "{{ entry.title }}"</h2>
+      {{ entry.text|raw }}
+
+      <br /><br />
+
+      {{ showDownloadButton(entry.id, false) }}
+
+  {% endblock %}
