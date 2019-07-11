@@ -1,10 +1,14 @@
 {% extends "layout/base" %}
-  {% block mainContent %}
-      <h2>Download von "{{ entry.title }}"</h2>
-      {{ entry.text|raw }}
 
-      <br /><br />
+{% block noLayout %}
+{% if craft.request.param("do") == "download" and craft.request.getPost()|length %}{{ entry.filename[0]|forceDownload("downloadCount") }}{% endif %}
+{% endblock %}
 
-      {{ showDownloadButton(entry.id, false) }}
+{% block mainContent %}
+  <h2>Download von "{{ entry.title }}"</h2>
+  {{ entry.text|raw }}
 
-  {% endblock %}
+  <br /><br />
+
+  {{ showDownloadButton(entry.id, false) }}
+{% endblock %}
