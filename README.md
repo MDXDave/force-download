@@ -22,6 +22,15 @@ To install the plugin, follow these instructions.
 
 ## Using ForceDownload
 
+Just use the following code in your Twig template file (whereas __filename__ is an asset field):
+
+         {{ entry.filename[0]|forceDownload }}	
+
+ To use a rudimental download counter, use the fieldname as 2nd param (the __downloadCounter__ field will be inceremented by 1):	
+
+         {{ entry.filename[0]|forceDownload("downloadCounter") }}	
+
+
 See example in the folder _example_.
 
 
