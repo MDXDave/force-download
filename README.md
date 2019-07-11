@@ -1,10 +1,10 @@
-# ForceDownload plugin for Craft CMS >= 3.1.33
+# ForceDownload plugin for Craft CMS >= 3.1.29
 
-Simple Downloader for Craft CMS >= 3.1.33
+Simple Downloader for Craft CMS >= 3.1.29
 
 ## Requirements
 
-This plugin requires Craft CMS 3.1.33 or later.
+This plugin requires Craft CMS 3.1.29 or later.
 
 ## Installation
 
