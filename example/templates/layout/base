@@ -1,0 +1,11 @@
+{% block noLayout %}{% endblock %}
+
+   <!DOCTYPE html>
+<html>
+<head>
+  ...
+</head>
+<body>
+  {% block mainContent %}{% endblock %}
+</body>
+</html>
