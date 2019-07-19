@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "craftcms/cms": "~3.1.33"
+        "craftcms/cms": "^3.1.29"
     },
     "config": {
         "optimize-autoloader": true
