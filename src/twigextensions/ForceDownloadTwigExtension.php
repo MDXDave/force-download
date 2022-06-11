@@ -11,7 +11,7 @@ namespace mdxdave\forcedownload\twigextensions;
 use mdxdave\forcedownload\ForceDownload;
 use Craft;
 
-class ForceDownloadTwigExtension extends \Twig_Extension
+class ForceDownloadTwigExtension extends \Twig\Extension\AbstractExtension
 {
     public function getName()
     {
@@ -21,14 +21,14 @@ class ForceDownloadTwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('forceDownload', [$this, 'forceDownload']),
-            new \Twig_SimpleFilter('downloadButton', [$this, 'downloadButton']),
+            new \Twig\TwigFilter('forceDownload', [$this, 'forceDownload']),
+            new \Twig\TwigFilter('downloadButton', [$this, 'downloadButton']),
         ];
     }
     
     public function getFunctions(){
         return [
-          new \Twig_SimpleFunction("showDownloadButton", [$this, 'showDownloadButton']),
+          new \Twig\TwigFunction("showDownloadButton", [$this, 'showDownloadButton']),
         ];
     }
     

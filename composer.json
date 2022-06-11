@@ -2,7 +2,7 @@
     "name": "mdxdave/force-download",
     "description": "Force download of assets",
     "type": "craft-plugin",
-    "version": "1.2.1",
+    "version": "2.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -22,10 +22,14 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.1.29"
+        "craftcms/cms": "^4.0.0"
     },
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
     },
     "repositories": [
         {
@@ -41,10 +45,15 @@
     "extra": {
         "name": "ForceDownload",
         "handle": "force-download",
-        "schemaVersion": "1.2.1",
+        "schemaVersion": "2.0.0",
         "hasCpSettings": false,
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/mdxdave/force-download/master/CHANGELOG.md",
         "class": "mdxdave\\forcedownload\\ForceDownload"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "craftcms/rector": "dev-main"
     }
 }
