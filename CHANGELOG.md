@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.0 - 2024-12-06
+- Update for Craft CMS 5.x
+
+## 2.0.0 - 2022-06-11
+- Update for Craft CMS 4.x
+
+## 1.2.1 - 2019-07-19
+- fixed wrong craft cms version in composer.json
+- fixed wrong version in composer.json
+
 ## 1.2.0 - 2019-07-11
 - Update to work with Craft CMS >= 3.1.29
 

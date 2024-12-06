@@ -1,95 +1,98 @@
 <?php
 /**
- * ForceDownload Plugin for Craft CMS >= 3.1.33
+ * ForceDownload Plugin for Craft CMS 5.x
  *
  * @link      https://mdxdave.de
- * @copyright Copyright (c) 2017-2019 MDXDave
+ * @copyright Copyright (c) 2017-2024 MDXDave
  */
 
 namespace mdxdave\forcedownload\twigextensions;
 
+use JetBrains\PhpStorm\NoReturn;
 use mdxdave\forcedownload\ForceDownload;
 use Craft;
 
 class ForceDownloadTwigExtension extends \Twig\Extension\AbstractExtension
 {
-    public function getName()
+    public function getName(): string
     {
         return 'ForceDownload';
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig\TwigFilter('forceDownload', [$this, 'forceDownload']),
             new \Twig\TwigFilter('downloadButton', [$this, 'downloadButton']),
         ];
     }
-    
-    public function getFunctions(){
+
+    public function getFunctions(): array
+    {
         return [
-          new \Twig\TwigFunction("showDownloadButton", [$this, 'showDownloadButton']),
+            new \Twig\TwigFunction("showDownloadButton", [$this, 'showDownloadButton']),
         ];
     }
-    
-    function showDownloadButton($id, $desc=true){
-      $formatter = Craft::$app->getFormatter();
-      if(is_numeric($id))
-        $asset = Craft::$app->elements->getElementById($id);
-      else
-        $asset = Craft::$app->elements->getElementByUri($id);
-        
-      $path = $this->_getFullDirectoryPath($asset->filename[0]);
-      $output = '<br /><div class="ui grid center aligned">
+
+    function showDownloadButton($id, $desc = true)
+    {
+        $formatter = Craft::$app->getFormatter();
+        if (is_numeric($id))
+            $asset = Craft::$app->elements->getElementById($id);
+        else
+            $asset = Craft::$app->elements->getElementByUri($id);
+
+        $output = '<br /><div class="ui grid center aligned">
       <div class="ui raised compact segment olive" style="min-width: 70%;">
-        <h3 style="text-align: center">'. $asset->filename[0]->filename .'</h3>
+        <h3 style="text-align: center">' . $asset->filename[0]->filename . '</h3>
         <div class="ui three statistics mini">
             <div class="statistic blue">
-                <div class="value">'. $formatter->asShortSize($asset->filename[0]->size) .'</div>
+                <div class="value">' . $formatter->asShortSize($asset->filename[0]->size) . '</div>
                 <div class="label">Größe</div>
             </div>
             <div class="statistic green">
-                <div class="value">'. $asset->downloadCount .'</div>
+                <div class="value">' . $asset->downloadCount . '</div>
                 <div class="label">Downloads</div>
             </div>
             <div class="statistic">
-                <div class="value">'. $asset->filename[0]->extension .'</div>
+                <div class="value">' . $asset->filename[0]->extension . '</div>
                 <div class="label">Dateityp</div>
             </div>
         </div>';
-        if($desc)
-              $output .= '<p>'. $asset->text .'</p>';
-      $output .= '<div class="ui grid center aligned"><div class="column twelve wide" style="margin: 10px;">
-    <form method="post" action="'. $asset->url .'">
-        <input type="hidden" name="checksum" value="'. hash("sha512", $asset->filename[0]->filename) .'" />
+        if ($desc)
+            $output .= '<p>' . $asset->text . '</p>';
+        $output .= '<div class="ui grid center aligned"><div class="column twelve wide" style="margin: 10px;">
+    <form method="post" action="' . $asset->url . '">
+        <input type="hidden" name="checksum" value="' . hash("sha512", $asset->filename[0]->filename) . '" />
         <input type="hidden" name="do" value="download" />
-        <input type="hidden" name="'. Craft::$app->config->general->csrfTokenName .'" value="'. Craft::$app->request->csrfToken .'">
+        <input type="hidden" name="' . Craft::$app->config->general->csrfTokenName . '" value="' . Craft::$app->request->csrfToken . '">
         <button id="downloadButton" class="ui labeled icon button green big">
             <i class="download icon white"></i> Herunterladen
         </button>
     </form></div></div></div></div><br />';
-    return \Craft\helpers\Template::raw($output);
-     
-    }
-    
-    function downloadButton($raw){      
-        $raw = preg_replace_callback("/\[download\]([0-9a-z-\/]*)\[\/download\]/", function($match){
-          return $this->showDownloadButton($match[1], true);
-        }, $raw);
-        return $raw;    
+        return \Craft\helpers\Template::raw($output);
+
     }
 
-    function forceDownload($asset, $downloadCounter=null) {
-        if($downloadCounter){
-          $download = Craft::$app->urlManager->getMatchedElement();	          
-          $download->setFieldValue($downloadCounter, $download->getFieldValue($downloadCounter)+1);
-          Craft::$app->elements->saveElement($download);
+    function downloadButton($raw): array|string|null
+    {
+        return preg_replace_callback("/\[download]([0-9a-z-\/]*)\[\/download]/", function ($match) {
+            return $this->showDownloadButton($match[1], true);
+        }, $raw);
+    }
+
+    #[NoReturn] function forceDownload($asset, $downloadCounter = null): void
+    {
+        if ($downloadCounter) {
+            $download = Craft::$app->urlManager->getMatchedElement();
+            $download->setFieldValue($downloadCounter, $download->getFieldValue($downloadCounter) + 1);
+            Craft::$app->elements->saveElement($download);
         }
-        
+
         $path = $this->_getFullDirectoryPath($asset);
         $filename = $asset->filename;
         $filepath = $path . '/' . $filename;
-        header('Content-type: '.$asset->getMimeType());
+        header('Content-type: ' . $asset->getMimeType());
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Content-Transfer-Encoding: binary');
         header('Content-Length: ' . $asset->size);
@@ -97,14 +100,9 @@ class ForceDownloadTwigExtension extends \Twig\Extension\AbstractExtension
         echo ob_get_clean();
         exit();
     }
-    
-    private function _getFullDirectoryPath($file)
+
+    private function _getFullDirectoryPath($asset): string
     {
-        $volumeId = $file->volumeId;
-        $volume = Craft::$app->getVolumes()->getVolumeById($volumeId);
-        if($volume->url != null)
-          return $volume->url;
-        else
-          return $volume->path;
+        return Craft::getAlias($asset->getVolume()->fs->path);
     }
 }

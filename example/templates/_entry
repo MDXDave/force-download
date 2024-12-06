@@ -1,7 +1,7 @@
 {% extends "layout/base" %}
 
 {% block noLayout %}
-{% if craft.request.param("do") == "download" and craft.request.getPost()|length %}{{ entry.filename[0]|forceDownload("downloadCount") }}{% endif %}
+{% if craft.app.request.param("do") == "download" and craft.app.request.getIsPost() %}{{ entry.filename[0]|forceDownload("downloadCount") }}{% endif %}
 {% endblock %}
 
 {% block mainContent %}

@@ -1,9 +1,9 @@
 <?php
 /**
- * ForceDownload Plugin for Craft CMS >= 3.1.33
+ * ForceDownload Plugin for Craft CMS 5.x
  *
  * @link      https://mdxdave.de
- * @copyright Copyright (c) 2017-2019 MDXDave
+ * @copyright Copyright (c) 2017-2024 MDXDave
  */
 
 namespace mdxdave\forcedownload;
